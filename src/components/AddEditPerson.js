@@ -27,8 +27,6 @@ const AddEditPerson = ({ isOpen, onClose, editUser }) => {
   const handleSubmit = event => {
     event.preventDefault();
 
-    console.log(phone);
-
     if (editUser) {
       const result = tableData.map(el => {
         if (el.id === editUser.id) {

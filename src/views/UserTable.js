@@ -28,13 +28,17 @@ import AddEditPerson from '../components/AddEditPerson';
 import DeleteAlert from '../components/DeleteAlert';
 
 const UserTable = () => {
+  const { tableData } = useContext(PhonebookContext);
+  
   const [searchVal, setSearchVal] = useState('');
   const [filterCompany, setFilterCompany] = useState('');
   const [editUser, setEditUser] = useState('');
   const [deleteId, setDeleteId] = useState('');
-
-  const { tableData } = useContext(PhonebookContext);
+  
+  // edit modal
   const { isOpen, onOpen, onClose } = useDisclosure();
+  
+  // delete modal
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -42,14 +46,15 @@ const UserTable = () => {
   } = useDisclosure();
 
   const cancelRef = useRef();
-
   const navigate = useNavigate();
 
+  // companies filter
   const companies = useMemo(
     () => [...new Set(tableData.map(data => data.company))],
     [tableData]
   );
 
+  // table data
   const data = useMemo(
     () =>
       tableData.filter(data => {
@@ -66,6 +71,7 @@ const UserTable = () => {
     [tableData, searchVal, filterCompany]
   );
 
+  // table columns 
   const columns = useMemo(
     () => [
       {
@@ -141,7 +147,14 @@ const UserTable = () => {
           </Select>
         </Flex>
 
-        <Box borderRadius="xl" border="1px" borderColor="gray.200" p={4} mt={4}>
+        <Box
+          borderRadius="xl"
+          border="1px"
+          borderColor="gray.200"
+          p={4}
+          mt={4}
+          overflowY="auto"
+        >
           <Table {...getTableProps()}>
             <Thead>
               {headerGroups.map(headerGroup => (
